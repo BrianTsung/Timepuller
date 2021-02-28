@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>  
+        <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+       <!-- <link rel="stylesheet" type="text/css" href="css/index.css">-->
+        <title>Timepuller</title>
+        <style>
+            .demo{
+                width:100px;
+                height:100px;
+                position:relative;
+                animation:TestMove2 1.5s; /*IE*/
+                -moz-animation:TestMove2 1.5s; /*FireFox*/
+                -webkit-animation:TestMove2 1.5s; /*Chrome, Safari*/
+                transition-timing-function:ease-out;
+                -moz-transition-timing-function:ease-out;
+                -webkit-transition-timing-function:ease-out;
+                animation-fill-mode: forwards;
+                -moz-animation-fill-mode: forwards;
+                -webkit-animation-fill-mode: forwards;
+                
+                
+            }
+            @keyframes TestMove2{
+                from {top:400px;left:10%;width: 100px;height: 100px;}
+                to {top:100px;left:10%;width: 300px;height: 300px;}
+            }
+            @-moz-keyframes TestMove2{
+                from {top:400px;left:10%;width: 100px;height: 100px;}
+                to {top:100px;left:10%;width: 300px;height: 300px;}
+           
+            }
+            @-webkit-keyframes TestMove2{
+                from {top:400px;left:10%;width: 100px;height: 100px;}
+                to {top:100px;left:10%;width: 300px;height: 300px;}
+               
+            }
+        </style>
+    </head>
+    <body background="" style="background-color:rgb(241, 232, 186);background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%">
+        <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-database.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyB50Eu-sILgSfBYpdiWArhAupCGbdK_JGc",
+                authDomain: "timepuller-f2b8b.firebaseapp.com",
+                databaseURL: "https://timepuller-f2b8b.firebaseio.com",
+                projectId: "timepuller-f2b8b",
+                storageBucket: "timepuller-f2b8b.appspot.com",
+                messagingSenderId: "389212109975"
+            };
+            firebase.initializeApp(config);
+        </script>
+        <input type="image" style="position:absolute;top:30%;left:15%;width:80%" src="images/pet1.png ">
+        <input type="image" style="position:absolute;top:85%;left:10%;width:35%" value="NO" id="btnno" src="images/no.png " />
+        <input type="image" style="position:absolute;top:85%;left:60%;width:35%" value="YES" id="btnyes" src="images/yes.png " />
+        <script>
+            var rootRef2 = firebase.database().ref().child("新增事項獎勵");
+            $("#btnyes").click(function () {
+                var rootRef = firebase.database().ref().child("小物品");
+                var random = Math.floor((Math.random() * 4) + 1);
+                if (random === 1) {
+                    $('#D1').html('<input type ="image" src="images/book.jpg"  class="demo"></input>');
+                    $('#D2').delay(1500).html('<p>恭喜獲得小物:國防課本</p>').fadeIn();
+                    rootRef.child("小物品1").set("國防課本");
+                    setTimeout(load, 2000);
+
+                }
+                else if (random === 2) {
+                    $('#D1').html('<input type ="image" src="images/book.jpg"  class="demo"></input>');
+                    $('#D2').delay(1500).html('<p>恭喜獲得小物:聖經</p>').fadeIn();
+                    rootRef.child("小物品2").set("聖經");
+                    setTimeout(load, 2000);
+                }
+                else if (random === 3) {
+                    $('#D1').html('<input type ="image" src="images/book.jpg"  class="demo"></input>');
+                    $('#D2').delay(1500).html('<p>恭喜獲得小物:英漢字典</p>').fadeIn();
+                    rootRef.child("小物品3").set("英漢字典");
+                    setTimeout(load, 2000);
+                }
+                else if (random === 4) {
+                    $('#D1').html('<input type ="image" src="images/book.jpg"  class="demo"></input>');
+                    $('#D2').delay(1500).html('<p>恭喜獲得小物:政治學</p>').fadeIn();
+                    rootRef.child("小物品4").set("政治學");
+                    setTimeout(load, 2000);
+                }
+            });
+
+            $("#btnno").click(function () {
+                rootRef2.on('value', function (datasnapshot) {
+                    var timereward = datasnapshot.val()
+                    $('#D3').html('<p>未完成代辦事項，扣除0.5時間積分</p>');
+                    timereward -= 0.5;
+                    document.forms['form1'].timevalue.value = timereward;
+                    setTimeout(load, 2000);
+
+                })
+            })
+
+            function load() {
+                window.location.href = './schedule.html';
+            }
+        </script>
+        <div id="D1"></div>
+        <div id="D2" style="position:absolute;top:60%;left:30%;"></div>
+        <div id="D3" style="position:absolute;top:60%;left:20%;"></div>
+
+    </body>
+    
+</html>

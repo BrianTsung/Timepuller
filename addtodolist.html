@@ -1,0 +1,267 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+       <!-- <link rel="stylesheet" type="text/css" href="css/index.css">-->
+        <title>Timepuller</title>
+        <style>
+            .time {
+                font-family: Microsoft JhengHei;
+                font-size: 16px;
+                display: block;
+                padding: 0.5rem 2rem;
+                height:30px;
+                width:112px;
+                position:absolute;
+            }
+            .date {
+                font-family: Microsoft JhengHei;
+                font-size: 18px;
+                display: block;
+                padding: 0.5rem 2rem;
+                height:40px;
+                width:200px;
+                position:absolute;
+            }
+            .imgbtn{
+                height:70px;
+                width:70px;
+                position:absolute;
+                -webkit-tap-highlight-color:transparent
+            }
+            .div{
+                z-index: 2;
+                position:absolute;
+                top:50%;
+                left:20%;
+                background-color:rgb(252, 210, 94);
+                width:250px;
+                height:100px;
+            }
+            
+        </style>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-database.js"></script>
+        <!-- jQuery v1.9.1 -->
+        <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <!-- pickadate.js v3.5.6 -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/themes/classic.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/themes/classic.date.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/themes/classic.time.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/picker.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/picker.date.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/picker.time.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyB50Eu-sILgSfBYpdiWArhAupCGbdK_JGc",
+                authDomain: "timepuller-f2b8b.firebaseapp.com",
+                databaseURL: "https://timepuller-f2b8b.firebaseio.com",
+                projectId: "timepuller-f2b8b",
+                storageBucket: "timepuller-f2b8b.appspot.com",
+                messagingSenderId: "389212109975"
+            };
+            firebase.initializeApp(config);
+        </script>  
+
+    </head>
+    <body background="images/timeset.png" style=" background-repeat:no-repeat;background-size:100%;background-attachment:fixed;" >
+   
+    <div id="div"></div>
+    <form name=form1>
+        <input type="hidden" id="activitynum"/>
+        <input type="text" class="date" id="start_date" value="請選擇開始日期" style="top:31%;left:23%"/>
+        <input type="text" class="date" id="end_date" value="請選擇結束日期" style="top:45%;left:23%"/>
+        <input type="text" class="time" id="start_time" value="請選擇開始時間" style="top:15%;left:0%"/>
+        <input type="text" class="time" id="end_time" value="請選擇結束時間" style="top:15%;left:51%"/>
+        <input type="textarea" class="text" id="user_text" value="備註" style="position:absolute;top:78%;left:0%;height:50px;width:100%;background-color:rgb(214, 211, 211);font-family: Microsoft JhengHei;">
+        <input type="hidden" id="timevalue"/>
+        <script>
+            $( ".date" ).pickadate();
+            $( ".time" ).pickatime();
+        </script>
+    </form>
+    <input type="image" alt="Submit" id="save_button" style="top:87% ;left:53%;position:absolute;height:80px;width:170px;-webkit-tap-highlight-color:transparent" ONCLICK="IsSetComm()" img src="images/savebtn.png">
+    <input type="image" id="cancel_button" style="top:87% ;left:3%;position:absolute;height:80px;width:170px;-webkit-tap-highlight-color:transparent" ONCLICK="location.href='./schedule.html'" img src="images/cancelbtn.png">
+    
+    <input type="image" class="imgbtn" ONCLICK="acttext1()" img src="images/meeting.png" style="top:56%;left:1%">
+    <input type="image" class="imgbtn" ONCLICK="acttext2()" img src="images/eat.png" style="top:56%;left:21%">
+    <input type="image" class="imgbtn" ONCLICK="acttext3()" img src="images/shop.png" style="top:56%;left:41%">
+    <input type="image" class="imgbtn" ONCLICK="acttext4()" img src="images/transport.png" style="top:56%;left:61%">
+    <input type="image" class="imgbtn" ONCLICK="acttext5()" img src="images/leisure.png" style="top:56%;left:81%">
+    <input type="image" class="imgbtn" ONCLICK="acttext6()" img src="images/sports.png" style="top:67%;left:1%">
+    <input type="image" class="imgbtn" ONCLICK="acttext7()" img src="images/part time.png" style="top:67%;left:21%">
+    <input type="image" class="imgbtn" ONCLICK="acttext8()" img src="images/study.png" style="top:67%;left:41%">
+    <input type="image" class="imgbtn" ONCLICK="acttext9()" img src="images/voice.png" style="top:67%;left:61%">
+    <input type="image" class="imgbtn" ONCLICK="acttext10()" img src="images/other.png" style="top:67%;left:81%">
+    
+
+    <script> 
+        var rootRef=firebase.database().ref().child("新增代辦事項"); 
+        var rootRef2=firebase.database().ref().child("新增事項獎勵");
+        function acttext1(){
+            document.forms['form1'].activitynum.value = "開會";
+        }
+        function acttext2(){
+            document.forms['form1'].activitynum.value = "吃飯";
+        }
+        function acttext3(){
+            document.forms['form1'].activitynum.value = "購物";
+        }
+        function acttext4(){
+            document.forms['form1'].activitynum.value = "交通";
+        }
+        function acttext5(){
+            document.forms['form1'].activitynum.value = "休閒";
+        }
+        function acttext6(){
+            document.forms['form1'].activitynum.value = "運動";
+        }
+        function acttext7(){
+            document.forms['form1'].activitynum.value = "打工";
+        }
+        function acttext8(){
+            document.forms['form1'].activitynum.value = "讀書";
+        }
+        function acttext9(){
+            document.forms['form1'].activitynum.value = "音樂";
+        }
+        function acttext10(){
+            document.forms['form1'].activitynum.value = "其他";
+        }
+        function IsSetComm()
+        {   
+            rootRef2.on('value',function(datasnapshot2){
+                var starthr=$('#start_time').val().split(":")[0]+$('#start_time').val().split(" ")[1];
+                if(starthr==='12AM'){starthr=Number(0);}
+                else if(starthr==='1AM'){starthr=Number(1);}
+                else if(starthr==='2AM'){starthr=Number(2);}
+                else if(starthr==='3AM'){starthr=Number(3);}
+                else if(starthr==='4AM'){starthr=Number(4);}
+                else if(starthr==='5AM'){starthr=Number(5);}
+                else if(starthr==='6AM'){starthr=Number(6);}
+                else if(starthr==='7AM'){starthr=Number(7);}
+                else if(starthr==='8AM'){starthr=Number(8);}
+                else if(starthr==='9AM'){starthr=Number(9);}
+                else if(starthr==='10AM'){starthr=Number(10);}
+                else if(starthr==='11AM'){starthr=Number(11);}
+                else if(starthr==='12PM'){starthr=Number(12);}
+                else if(starthr==='1PM'){starthr=Number(13);}
+                else if(starthr==='2PM'){starthr=Number(14);}
+                else if(starthr==='3PM'){starthr=Number(15);}
+                else if(starthr==='4PM'){starthr=Number(16);}
+                else if(starthr==='5PM'){starthr=Number(17);}
+                else if(starthr==='6PM'){starthr=Number(18);}
+                else if(starthr==='7PM'){starthr=Number(19);}
+                else if(starthr==='8PM'){starthr=Number(20);}
+                else if(starthr==='9PM'){starthr=Number(21);}
+                else if(starthr==='10PM'){starthr=Number(22);}
+                else if(starthr==='11PM'){starthr=Number(23);}
+                var startmin=$('#start_time').val().split(":")[1];
+                startmin=Number(startmin.split(" ")[0]);
+
+                var endhr=$('#end_time').val().split(":")[0]+$('#end_time').val().split(" ")[1];
+                if(endhr==='12AM'){endhr=Number(0);}
+                else if(endhr==='1AM'){endhr=Number(1);}
+                else if(endhr==='2AM'){endhr=Number(2);}
+                else if(endhr==='3AM'){endhr=Number(3);}
+                else if(endhr==='4AM'){endhr=Number(4);}
+                else if(endhr==='5AM'){endhr=Number(5);}
+                else if(endhr==='6AM'){endhr=Number(6);}
+                else if(endhr==='7AM'){endhr=Number(7);}
+                else if(endhr==='8AM'){endhr=Number(8);}
+                else if(endhr==='9AM'){endhr=Number(9);}
+                else if(endhr==='10AM'){endhr=Number(10);}
+                else if(endhr==='11AM'){endhr=Number(11);}
+                else if(endhr==='12PM'){endhr=Number(12);}
+                else if(endhr==='1PM'){endhr=Number(13);}
+                else if(endhr==='2PM'){endhr=Number(14);}
+                else if(endhr==='3PM'){endhr=Number(15);}
+                else if(endhr==='4PM'){endhr=Number(16);}
+                else if(endhr==='5PM'){endhr=Number(17);}
+                else if(endhr==='6PM'){endhr=Number(18);}
+                else if(endhr==='7PM'){endhr=Number(19);}
+                else if(endhr==='8PM'){endhr=Number(20);}
+                else if(endhr==='9PM'){endhr=Number(21);}
+                else if(endhr==='10PM'){endhr=Number(22);}
+                else if(endhr==='11PM'){endhr=Number(23);}
+                var endmin=$('#end_time').val().split(":")[1];
+                endmin=Number(endmin.split(" ")[0]);
+
+                var timereward=Number(datasnapshot2.val());
+                var nowtimereward=0;
+                var hr=endhr-starthr;
+                var min=endmin-startmin;
+                //var total=0;
+                if(hr>0&&min<0){
+                    endhr-=1;
+                    endmin+=60;
+                    hr=endhr-starthr;
+                    min=endmin-startmin;
+                    timereward+=((hr+min/60)/2);
+                    nowtimereward=(hr+min/60)/2;
+                    document.forms['form1'].timevalue.value = timereward; 
+                    if(timereward>5){
+                        $('#div').html('<div class="div"><p id="p"></p><input type="button" style="position:absolute;left:45%;background-color: rgb(194, 153, 42);border: none;color: white;" value="確認" id="button"></div>');
+                        var p=document.getElementById("p");
+                        p.innerText="已獲得超過5小時時間積分，無法再獲得獎勵";
+                        }
+                    else{
+                        $('#div').html('<div class="div"><p id="p2"></p><input type="button" style="position:absolute;left:45%;background-color: rgb(194, 153, 42);border: none;color: white;" value="確認" id="button"></div>');
+                        var p2=document.getElementById("p2");
+                        p2.innerText="獲得"+nowtimereward+"小時時間積分(最多5小時)";
+                    }
+                    $("#button").click(function(){   
+                        rootRef2.set($('#timevalue').val());                    
+                        window.location.href='./schedule.html';
+                        });
+                }
+                else{
+                    hr=endhr-starthr;
+                    min=endmin-startmin;
+                    timereward+=((hr+min/60)/2);
+                    nowtimereward=(hr+min/60)/2;
+                    document.forms['form1'].timevalue.value = timereward; 
+                    if(timereward>5){
+                        $('#div').html('<div class="div"><p id="p3"></p><input type="button" style="position:absolute;left:45%;background-color: rgb(194, 153, 42);border: none;color: white;" value="確認" id="button"></div>');
+                        var p3=document.getElementById("p3");
+                        p3.innerText="已獲得超過5小時時間積分，無法再獲得獎勵";                      
+                        }
+                    else{
+                        $('#div').html('<div class="div"><p id="p4"></p><input type="button" style="position:absolute;left:45%;background-color: rgb(194, 153, 42);border: none;color: white;" value="確認" id="button"></div>');
+                        var p4=document.getElementById("p4");
+                        p4.innerText="獲得"+nowtimereward+"小時時間積分(最多5小時)";
+                        
+                    }
+                    $("#button").click(function(){  
+                        rootRef2.set($('#timevalue').val());                     
+                        window.location.href='./schedule.html';
+                        });
+                }
+            })   
+            
+            var startdate=$('#start_date').val();
+            if((startdate.substr(0,2))<10){startdate="0"+startdate;}
+            var enddate=$('#start_date').val();
+            if((enddate.substr(0,2))<10){enddate="0"+enddate;}
+            //window.location = 'schedule.html';  
+            var data={
+                startdate:startdate,
+                starttime:$('#start_time').val(),
+                enddate:enddate,
+                endtime:$('#end_time').val(),
+                category:$('#activitynum').val(),
+                remarks:$('#user_text').val()
+            }
+            rootRef.push(data);
+        }
+        
+       
+    </script>
+    </body>
+</html>

@@ -1,0 +1,300 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+       <!-- <link rel="stylesheet" type="text/css" href="css/index.css">-->
+        <title>Timepuller</title>
+        <style>
+            p {
+                line-height: 20px;
+                font-family: Microsoft JhengHei;
+                font-weight: bold;
+                color: rgb(9, 94, 12);
+            }
+
+            button {
+                background-color: rgb(19, 104, 22);
+                border: none;
+                color: white;
+            }
+        </style>
+        
+    </head> 
+    <body background="images/newmission.png" style=" background-repeat:no-repeat;background-attachment:fixed;background-size:100%" >
+    <input  type="image" style="top:2%;left:1%;outline:none;position:absolute; height:25px;width:25px;-webkit-tap-highlight-color:transparent" onclick="location.href='./HOME.html'" img src="images/backtohomebtn.png"   >
+    <input  type="image" style="top:2%;left:85%;outline:none;position:absolute; height:30px;width:30px;-webkit-tap-highlight-color:transparent" onclick="location.href='./chart.html'" img src="images/chartbtn.png "   >
+    
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-database.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyB50Eu-sILgSfBYpdiWArhAupCGbdK_JGc",
+            authDomain: "timepuller-f2b8b.firebaseapp.com",
+            databaseURL: "https://timepuller-f2b8b.firebaseio.com",
+            projectId: "timepuller-f2b8b",
+            storageBucket: "timepuller-f2b8b.appspot.com",
+            messagingSenderId: "389212109975"
+        };
+        firebase.initializeApp(config);
+    </script>  
+
+    <script language="JavaScript">
+        //顯示新增行程
+        var rootRef=firebase.database().ref('新增代辦事項');
+        rootRef.on('value',gotData)
+        
+        function gotData(data){          
+            var ddata=data.val();
+            var keys=Object.keys(ddata);
+            //console.log(keys);
+            for(var i=0;i<keys.length;i++){
+                var k = keys[i];
+                var startdate = ddata[k].startdate;
+                var enddate = ddata[k].enddate;
+                var starttime = ddata[k].starttime;
+                var endtime = ddata[k].endtime;
+                var category = ddata[k].category;
+                var remarks = ddata[k].remarks;
+                //console.log(test);
+                var startday=Number(startdate.substr(0,2));
+                var startmonth = 0;
+                if(startdate.substr(3,3)==='Jan'){
+                    startmonth=1;
+                    startmonth=Number(startmonth);
+                }
+                else if(startdate.substr(3,3)==='Feb'){
+                    startmonth=2;
+                    startmonth=Number(startmonth);
+                }
+                else if(startdate.substr(3,3)==='Mar'){
+                    startmonth=3;
+                    startmonth=Number(startmonth);
+                }
+                else if(startdate.substr(3,3)==='Apr'){
+                    startmonth=4;
+                    startmonth=Number(startmonth);
+                }
+                else if(startdate.substr(3,3)==='May'){
+                    startmonth=5;
+                    startmonth=Number(startmonth);
+                }
+                else if(startdate.substr(3,3)==='Jun'){
+                    startmonth=6;
+                    startmonth=Number(startmonth);
+                }
+                else if(startdate.substr(3,3)==='Jul'){
+                    startmonth=7;
+                    startmonth=Number(startmonth);
+                }
+                else if(startdate.substr(3,3)==='Aug'){
+                    startmonth=8;
+                    startmonth=Number(startmonth);
+                }
+                else if(startdate.substr(3,3)==='Sep'){
+                    startmonth=9;
+                    startmonth=Number(startmonth);
+                }
+                else if(startdate.substr(3,3)==='Oct'){
+                    startmonth=10;
+                    startmonth=Number(startmonth);
+                }
+                else if(startdate.substr(3,3)==='Nov'){
+                    startmonth=11;
+                    startmonth=Number(startmonth);
+                }
+                else if(startdate.substr(3,3)==='Dec'){
+                    startmonth=12;
+                    startmonth=Number(startmonth);
+                }
+                var startyear=Number(startdate.split(", ")[1]);
+
+                var endday=Number(enddate.substr(0,2));
+                var endmonth = 0;
+                if(enddate.substr(3,3)==='Jan'){
+                    endmonth=1;
+                    endmonth=Number(endmonth);
+                }
+                else if(enddate.substr(3,3)==='Feb'){
+                    endmonth=2;
+                    endmonth=Number(endmonth);
+                }
+                else if(enddate.substr(3,3)==='Mar'){
+                    endmonth=3;
+                    endmonth=Number(endmonth);
+                }
+                else if(enddate.substr(3,3)==='Apr'){
+                    endmonth=4;
+                    endmonth=Number(endmonth);
+                }
+                else if(enddate.substr(3,3)==='May'){
+                    endmonth=5;
+                    endmonth=Number(endmonth);
+                }
+                else if(enddate.substr(3,3)==='Jun'){
+                    endmonth=6;
+                    endmonth=Number(endmonth);
+                }
+                else if(enddate.substr(3,3)==='Jul'){
+                    endmonth=7;
+                    endmonth=Number(endmonth);
+                }
+                else if(enddate.substr(3,3)==='Aug'){
+                    endmonth=8;
+                    endmonth=Number(endmonth);
+                }
+                else if(enddate.substr(3,3)==='Sep'){
+                    endmonth=9;
+                    endmonth=Number(endmonth);
+                }
+                else if(enddate.substr(3,3)==='Oct'){
+                    endmonth=10;
+                    endmonth=Number(endmonth);
+                }
+                else if(enddate.substr(3,3)==='Nov'){
+                    endmonth=11;
+                    endmonth=Number(endmonth);
+                }
+                else if(enddate.substr(3,3)==='Dec'){
+                    endmonth=12;
+                    endmonth=Number(endmonth);
+                }
+                var endyear=Number(enddate.split(", ")[1]);
+
+                var starthr=Number(starttime.split(":")[0])+starttime.split(" ")[1];
+                if(starthr==='12AM'){starthr=Number(0);}
+                else if(starthr==='1AM'){starthr=Number(1);}
+                else if(starthr==='2AM'){starthr=Number(2);}
+                else if(starthr==='3AM'){starthr=Number(3);}
+                else if(starthr==='4AM'){starthr=Number(4);}
+                else if(starthr==='5AM'){starthr=Number(5);}
+                else if(starthr==='6AM'){starthr=Number(6);}
+                else if(starthr==='7AM'){starthr=Number(7);}
+                else if(starthr==='8AM'){starthr=Number(8);}
+                else if(starthr==='9AM'){starthr=Number(9);}
+                else if(starthr==='10AM'){starthr=Number(10);}
+                else if(starthr==='11AM'){starthr=Number(11);}
+                else if(starthr==='12PM'){starthr=Number(12);}
+                else if(starthr==='1PM'){starthr=Number(13);}
+                else if(starthr==='2PM'){starthr=Number(14);}
+                else if(starthr==='3PM'){starthr=Number(15);}
+                else if(starthr==='4PM'){starthr=Number(16);}
+                else if(starthr==='5PM'){starthr=Number(17);}
+                else if(starthr==='6PM'){starthr=Number(18);}
+                else if(starthr==='7PM'){starthr=Number(19);}
+                else if(starthr==='8PM'){starthr=Number(20);}
+                else if(starthr==='9PM'){starthr=Number(21);}
+                else if(starthr==='10PM'){starthr=Number(22);}
+                else if(starthr==='11PM'){starthr=Number(23);}
+                var startmin=starttime.split(":")[1];
+                startmin=Number(startmin.split(" ")[0]);
+
+                var endhr=endtime.split(":")[0]+endtime.split(" ")[1];
+                    if(endhr==='12AM'){endhr=Number(0);}
+                    else if(endhr==='1AM'){endhr=Number(1);}
+                    else if(endhr==='2AM'){endhr=Number(2);}
+                    else if(endhr==='3AM'){endhr=Number(3);}
+                    else if(endhr==='4AM'){endhr=Number(4);}
+                    else if(endhr==='5AM'){endhr=Number(5);}
+                    else if(endhr==='6AM'){endhr=Number(6);}
+                    else if(endhr==='7AM'){endhr=Number(7);}
+                    else if(endhr==='8AM'){endhr=Number(8);}
+                    else if(endhr==='9AM'){endhr=Number(9);}
+                    else if(endhr==='10AM'){endhr=Number(10);}
+                    else if(endhr==='11AM'){endhr=Number(11);}
+                    else if(endhr==='12PM'){endhr=Number(12);}
+                    else if(endhr==='1PM'){endhr=Number(13);}
+                    else if(endhr==='2PM'){endhr=Number(14);}
+                    else if(endhr==='3PM'){endhr=Number(15);}
+                    else if(endhr==='4PM'){endhr=Number(16);}
+                    else if(endhr==='5PM'){endhr=Number(17);}
+                    else if(endhr==='6PM'){endhr=Number(18);}
+                    else if(endhr==='7PM'){endhr=Number(19);}
+                    else if(endhr==='8PM'){endhr=Number(20);}
+                    else if(endhr==='9PM'){endhr=Number(21);}
+                    else if(endhr==='10PM'){endhr=Number(22);}
+                    else if(endhr==='11PM'){endhr=Number(23);}
+                    var endmin=endtime.split(":")[1];
+                    endmin=Number(endmin.split(" ")[0]);
+                //-----------------
+                var div=document.getElementById("testlist");
+                var smalldiv=document.createElement("div");
+                var p=document.createElement("p");
+                smalldiv.style.marginTop='5px';
+                smalldiv.style.width='350px';
+                smalldiv.style.backgroundColor="rgb(165, 227, 182,0.8)";
+                //ull.innerText="開始日期:"+startyear+"/"+startmonth+"/"+startday+"\n"+"結束日期:"+endyear+"/"+endmonth+"/"+endday+"\n"+"開始時間:"+starttime+"\n"+"結束時間:"+endtime+"\n"+"活動類別:"+category+"\n"+"備註:"+remarks+"\n";
+                //ul.appendChild(ull);
+                //-----------------
+                var now = new Date();
+                var clockstartDate = new Date(startyear,startmonth-1,startday,starthr,startmin);
+                var clockendDate = new Date(endyear,endmonth-1,endday,endhr,endmin);
+                if((clockstartDate-now)>0){
+                    p.innerText=startyear+"/"+startmonth+"/"+startday+"~"+endyear+"/"+endmonth+"/"+endday+"\n"+starttime+"~"+endtime+"\n"+"活動類別:"+category+"\n"+"備註:"+remarks+"\n"+"還未開始";
+                    smalldiv.appendChild(p);
+                    div.appendChild(smalldiv);
+                }
+                else {
+                    var spantime = (clockendDate - now)/1000;
+                    spantime --;
+                    var d = Math.floor(spantime / (24 * 3600));
+                    var h = Math.floor((spantime % (24*3600))/3600);
+                    var m = Math.floor((spantime % 3600)/(60));
+                    var s = Math.floor(spantime%60);
+                    if(d>=0){
+                        str = d + "天 " + h + "時 " + m + "分 " + s + "秒 ";
+                        //document.getElementById("pad1").innerHTML = "還剩:"+str
+                        p.innerText="開始日期:"+startyear+"/"+startmonth+"/"+startday+"\n"+"結束日期:"+endyear+"/"+endmonth+"/"+endday+"\n"+"開始時間:"+starttime+"\n"+"結束時間:"+endtime+"\n"+"活動類別:"+category+"\n"+"備註:"+remarks+"\n"+"還剩:"+str;
+                        smalldiv.appendChild(p);
+                        div.appendChild(smalldiv);
+                    ;}
+                    else{
+                        //document.getElementById("pad1").innerHTML = "已結束";
+                        p.innerText="開始日期:"+startyear+"/"+startmonth+"/"+startday+"\n"+"結束日期:"+endyear+"/"+endmonth+"/"+endday+"\n"+"開始時間:"+starttime+"\n"+"結束時間:"+endtime+"\n"+"活動類別:"+category+"\n"+"備註:"+remarks+"\n"+"已結束";
+                        smalldiv.appendChild(p);
+                        //$('#divcheckbtn').html('<input type ="button" id="checkbtn" class="checkbtn" value="點擊確認是否完成"></input>')
+                        var btn=document.createElement("button");
+                        btn.id='checkbtn';
+                        btn.style.height='30px';
+                        btn.style.width='130px';
+                        btn.innerText='點擊確認是否完成';
+                        smalldiv.appendChild(btn);
+                        div.appendChild(smalldiv);
+                        var btndisable=firebase.database().ref().child("按鈕禁用").child("是否禁用");
+                        btndisable.on('value',function(datasnapshot){
+                            var disable=datasnapshot.val();
+                            if(disable==="true"){
+                                $("#checkbtn").attr('disabled', true);
+                            }
+                            else{
+                                $("#checkbtn").click(function(){                       
+                                btndisable.set("true");
+                                window.location.href='./finish.html';
+                                });
+                            }
+                        })
+                    ;}
+                }  
+            }
+
+            
+        }
+
+        window.onload = function () {
+            setInterval(gotData, 1000);
+        };
+
+    
+    </script>
+    <div id="testlist" style="position:absolute;top:20%;">       
+        <p id="divcheckbtn"></p>
+        <input  type="image" style="top:90%;left:85%;outline:none;position:absolute; height:45px;width:45px;-webkit-tap-highlight-color:transparent" onclick="location.href='./addtodolist.html'" img src="images/addbtn.png "   >
+    </div>
+    
+</body>
+    
+</html>

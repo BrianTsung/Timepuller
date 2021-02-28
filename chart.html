@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>   
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+       <!-- <link rel="stylesheet" type="text/css" href="css/index.css">-->
+        <title>Timepuller</title>
+        
+    </head>
+    <body background="images/chart.png" style=" background-repeat:no-repeat;background-size:100%;background-attachment:fixed;">
+        <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-database.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyB50Eu-sILgSfBYpdiWArhAupCGbdK_JGc",
+                authDomain: "timepuller-f2b8b.firebaseapp.com",
+                databaseURL: "https://timepuller-f2b8b.firebaseio.com",
+                projectId: "timepuller-f2b8b",
+                storageBucket: "timepuller-f2b8b.appspot.com",
+                messagingSenderId: "389212109975"
+            };
+            firebase.initializeApp(config);
+        </script>
+        <input type="image" style="top:2%;left:90%;outline:none;position:absolute; height:30px;width:30px;-webkit-tap-highlight-color:transparent" onclick="location.href='./HOME.html'" img src="images/homebtn.png">
+        <input type="image" style="top:2%;left:2%;outline:none;position:absolute; height:30px;width:30px;-webkit-tap-highlight-color:transparent" onclick="location.href='./schedule.html'" img src="images/backtohomebtn.png">
+        <script>
+            var rootRef = firebase.database().ref('新增代辦事項');
+            rootRef.on('value', gotData)
+            function gotData(data) {
+                var ctx = document.getElementById('canvasPie').getContext('2d');
+                var pieChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{
+                            backgroundColor: [
+                                //資料顏色
+                                "#F08080",
+                                "#FFFF4D",
+                                "#6B8E23",
+                                "#30D5C8",
+                                "#00477D",
+                                "#6633CC"
+                            ]
+                        }]
+                    }
+                });
+
+                var ddata = data.val();
+                var keys = Object.keys(ddata);
+                for (var i = 0; i < keys.length; i++) {
+                    var k = keys[i];
+                    var starttime = ddata[k].starttime;
+                    var endtime = ddata[k].endtime;
+                    var category = ddata[k].category;
+                    var time = 0;
+                    var starthr = starttime.split(":")[0];
+                    var endhr = endtime.split(":")[0];
+                    var startmin = starttime.split(":")[1];
+                    var endmin = endtime.split(":")[1];
+                    startmin = Number(startmin.split(" ")[0]);
+                    endmin = Number(endmin.split(" ")[0]);
+                    time = ((endhr * 60 + endmin) - (starthr * 60 + startmin)) / 60;
+                    pieChart.data.labels.push(category);
+                    pieChart.data.datasets.forEach((dataset) => {
+                        dataset.data.push(time);
+                    });
+                    pieChart.update();
+                }
+
+            }
+            window.onload = function () {
+                gotData();
+            }
+        </script>
+        <div style="position: absolute;top:6%;left:5%;width: 200px; height: 200px">
+            <canvas id="canvasPie"></canvas>
+        </div>
+
+    </body>
+</html>

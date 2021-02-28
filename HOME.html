@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+       <!-- <link rel="stylesheet" type="text/css" href="css/index.css">-->
+        <title>Timepuller</title>
+        <style>
+        </style>
+        
+    </head>
+    <body background="images/home UI day.png" style=" background-repeat:no-repeat;background-attachment:fixed;background-size:100%">
+        <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-database.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyB50Eu-sILgSfBYpdiWArhAupCGbdK_JGc",
+                authDomain: "timepuller-f2b8b.firebaseapp.com",
+                databaseURL: "https://timepuller-f2b8b.firebaseio.com",
+                projectId: "timepuller-f2b8b",
+                storageBucket: "timepuller-f2b8b.appspot.com",
+                messagingSenderId: "389212109975"
+            };
+            firebase.initializeApp(config);
+        </script>
+        <embed src="images/music.mp3" autostart=true hidden=true>
+        <input type="image" style="top:80%;left:10%;outline:none;position:absolute;height:130px;width:130px;-webkit-tap-highlight-color:transparent" onclick="location.href='./schedule.html'" src="images/schedule.png ">
+        <input type="image" style="top:80%;left:40%;outline:none;position:absolute;height:130px;width:130px;-webkit-tap-highlight-color:transparent" onclick="location.href='./bag.html'" src="images/bag.png ">
+        <input type="image" style="top:80%;left:70%;outline:none;position:absolute;height:130px;width:130px;-webkit-tap-highlight-color:transparent" onclick="location.href='./twistedeggs.html'" src="images/egg.png ">
+        <script>
+            var rootRef = firebase.database().ref().child("新增事項獎勵");
+            rootRef.on('value', function (datasnapshot) {
+                var text = datasnapshot.val();
+                var div = document.getElementById("div");
+                div.innerText = "時間積分" + text;
+            })
+        </script>
+
+        <div id="div" style="position:absolute;left:40%;font-family:Microsoft JhengHei;"></div>
+    </body>
+    
+</html>

@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *">  
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+       <!-- <link rel="stylesheet" type="text/css" href="css/index.css">-->
+        <title>Timepuller</title>
+        
+    </head>
+    <body background="images/bg.jpg" style="background-repeat:no-repeat;background-size:100%;background-attachment:fixed;">
+        
+    <script>      
+
+            //動畫計數, x位置, y位置
+            
+            var count = 0, x = 105, y = 190;
+            
+            
+            
+            //載入背景圖片
+            
+            var background = new Image() ;
+            
+            //background.src = "D://Go-getter/UI/bg.jpg" ;
+            
+               
+            
+            //載入人物圖片
+            
+            var sprite = new Image() ;
+            
+            sprite.src = "images/egggg.png" ;
+            
+               
+            
+            //建立畫布
+            
+            var canvas = document.createElement("canvas") ;
+            
+            document.body.appendChild(canvas) ;
+            
+               
+            
+            //調整畫布大小
+            
+            canvas.width = 375 ;
+            
+            canvas.height = 667;
+            
+            
+            
+            // 先後將背景圖片與前景圖片描繪到畫布
+            
+            function draw() 
+            
+            {   
+            
+                var context = canvas.getContext("2d") ;
+            
+                //context.drawImage(background, 0, 0) ;
+            
+               
+            
+                
+            
+            
+            
+             //判斷當前該播放的圖片位置
+            
+             switch(count) 
+            
+             {
+            
+              case 0:
+            
+               //context.繪製圖片(圖片或畫布或影片, 開始裁切的x位置, 開始裁切的y位置, 裁切範圍的寬, 裁切範圍的高, 繪製圖片的x位置, 繪製圖片的y位置, 圖片寬, 圖片高)
+            
+               context.drawImage(sprite, 0, 0, 165, 258, x, y, 165, 258);
+            
+               count++;
+            
+               break;
+            
+              
+            
+              case 1:
+            
+               context.drawImage(sprite, 344, 0, 165, 258, x, y, 165, 258);
+            
+               count++;
+            
+               break;
+            
+               
+            
+              case 2:
+            
+               context.drawImage(sprite, 667, 0, 165, 258, x, y, 165, 258);
+            
+               count++;
+            
+               break;
+            
+              
+            
+              case 3:
+            
+               context.drawImage(sprite, 996, 0, 165, 258, x, y, 165, 258);
+            
+               count++;
+            
+               break;
+            
+              
+            
+              case 4:
+            
+               context.drawImage(sprite, 1324, 0, 165, 258, x, y, 165, 258);
+            
+               count++;
+            
+               break;
+            
+              
+            
+              case 5:
+            
+               context.drawImage(sprite, 1647, 0, 165, 258, x, y, 165, 258);
+            
+               count++;
+            
+               break;
+            
+             
+            
+              case 6:
+            
+               context.drawImage(sprite, 1999, 0, 165, 258, x, y, 165, 258);
+            
+               count++;
+            
+               break;
+            
+              
+            
+              case 7:
+            
+               context.drawImage(sprite, 2311, 0, 165, 258, x, y, 165, 258);
+            
+               count++;
+            
+               break;
+            
+              
+            
+              case 8:
+            
+               context.drawImage(sprite, 2649, 0, 165, 258, x, y, 165, 258);
+            
+               
+            
+               //跳回第1張圖
+            
+               count=0;
+            
+               break;  
+            
+                }
+            
+            }
+            
+            
+            
+            // 網頁載入後執行 draw()
+            
+            window.onload = setInterval(draw, 250) ;
+            
+            </script>
+       
+       
+
+    </body>
+</html> 
