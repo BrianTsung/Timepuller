@@ -43,7 +43,7 @@
             }
             
         </style>
-        
+       
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
         <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-database.js"></script>
@@ -138,58 +138,18 @@
         {   
             rootRef2.on('value',function(datasnapshot2){
                 var starthr=$('#start_time').val().split(":")[0]+$('#start_time').val().split(" ")[1];
-                if(starthr==='12AM'){starthr=Number(0);}
-                else if(starthr==='1AM'){starthr=Number(1);}
-                else if(starthr==='2AM'){starthr=Number(2);}
-                else if(starthr==='3AM'){starthr=Number(3);}
-                else if(starthr==='4AM'){starthr=Number(4);}
-                else if(starthr==='5AM'){starthr=Number(5);}
-                else if(starthr==='6AM'){starthr=Number(6);}
-                else if(starthr==='7AM'){starthr=Number(7);}
-                else if(starthr==='8AM'){starthr=Number(8);}
-                else if(starthr==='9AM'){starthr=Number(9);}
-                else if(starthr==='10AM'){starthr=Number(10);}
-                else if(starthr==='11AM'){starthr=Number(11);}
-                else if(starthr==='12PM'){starthr=Number(12);}
-                else if(starthr==='1PM'){starthr=Number(13);}
-                else if(starthr==='2PM'){starthr=Number(14);}
-                else if(starthr==='3PM'){starthr=Number(15);}
-                else if(starthr==='4PM'){starthr=Number(16);}
-                else if(starthr==='5PM'){starthr=Number(17);}
-                else if(starthr==='6PM'){starthr=Number(18);}
-                else if(starthr==='7PM'){starthr=Number(19);}
-                else if(starthr==='8PM'){starthr=Number(20);}
-                else if(starthr==='9PM'){starthr=Number(21);}
-                else if(starthr==='10PM'){starthr=Number(22);}
-                else if(starthr==='11PM'){starthr=Number(23);}
+                if(starthr=='12AM'){starthr=Number(0);}
+                else if(starthr=='12PM'){starthr=Number(12);}
+                else if($('#start_time').val().split(" ")[1]=='AM'){starthr=Number($('#start_time').val().split(":")[0]);}
+                else if($('#start_time').val().split(" ")[1]=='PM'){starthr=Number($('#start_time').val().split(":")[0])+12;}
                 var startmin=$('#start_time').val().split(":")[1];
                 startmin=Number(startmin.split(" ")[0]);
 
                 var endhr=$('#end_time').val().split(":")[0]+$('#end_time').val().split(" ")[1];
                 if(endhr==='12AM'){endhr=Number(0);}
-                else if(endhr==='1AM'){endhr=Number(1);}
-                else if(endhr==='2AM'){endhr=Number(2);}
-                else if(endhr==='3AM'){endhr=Number(3);}
-                else if(endhr==='4AM'){endhr=Number(4);}
-                else if(endhr==='5AM'){endhr=Number(5);}
-                else if(endhr==='6AM'){endhr=Number(6);}
-                else if(endhr==='7AM'){endhr=Number(7);}
-                else if(endhr==='8AM'){endhr=Number(8);}
-                else if(endhr==='9AM'){endhr=Number(9);}
-                else if(endhr==='10AM'){endhr=Number(10);}
-                else if(endhr==='11AM'){endhr=Number(11);}
                 else if(endhr==='12PM'){endhr=Number(12);}
-                else if(endhr==='1PM'){endhr=Number(13);}
-                else if(endhr==='2PM'){endhr=Number(14);}
-                else if(endhr==='3PM'){endhr=Number(15);}
-                else if(endhr==='4PM'){endhr=Number(16);}
-                else if(endhr==='5PM'){endhr=Number(17);}
-                else if(endhr==='6PM'){endhr=Number(18);}
-                else if(endhr==='7PM'){endhr=Number(19);}
-                else if(endhr==='8PM'){endhr=Number(20);}
-                else if(endhr==='9PM'){endhr=Number(21);}
-                else if(endhr==='10PM'){endhr=Number(22);}
-                else if(endhr==='11PM'){endhr=Number(23);}
+                else if($('#start_time').val().split(" ")[1]=='AM'){starthr=Number($('#start_time').val().split(":")[0]);}
+                else if($('#start_time').val().split(" ")[1]=='PM'){starthr=Number($('#start_time').val().split(":")[0])+12;}
                 var endmin=$('#end_time').val().split(":")[1];
                 endmin=Number(endmin.split(" ")[0]);
 
@@ -260,8 +220,6 @@
             }
             rootRef.push(data);
         }
-        
-       
     </script>
     </body>
 </html>
